@@ -1,0 +1,36 @@
+body {
+    background: #1c1c1c;
+    color: #fff;
+}
+
+.app {
+    vertical-align: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 10px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 99vw;
+    margin: 1vh;
+}
+
+.button {
+    color: white;
+    background-color: rgb(47, 39, 39);
+    margin-left: 1vw;
+    width: 15vw;
+    height: 5vh;
+    font-size: 1.4rem;
+}
+
+.video {
+    margin-left: 2vw;
+    width: 95vw;
+    height: 92vh;
+    object-fit: cover;
+}

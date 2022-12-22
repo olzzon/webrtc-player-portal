@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { io } from "socket.io-client";
-import { IPlayer } from "../../sharedcode/interfaces";
+import { ISource } from "../../sharedcode/interfaces";
 import * as IO from "../../sharedcode/IO_CONSTANTS";
-import WebRTCSource from "./WebRTCSource";
+import "../style/app.css";
 
 const socketClient = io();
 console.log("socketClient :", socketClient);
@@ -10,24 +10,54 @@ console.log("socketClient :", socketClient);
 socketClient.emit(IO.GET_ALL_PLAYERS);
 
 const App = () => {
-  const [players, setPlayers] = useState<IPlayer[]>([]);
+  const [sources, setSources] = useState<ISource[]>([]);
+  const [isSelected, setIsSelected] = useState<number>(-1);
 
-  socketClient.on(IO.ALL_PLAYERS, (receivedPlayers: IPlayer[]) => {
-    setPlayers(receivedPlayers);
+  socketClient.on(IO.ALL_PLAYERS, (receivedSources: ISource[]) => {
     console.log(
-      "Players received :",
-      receivedPlayers.map((player) => player.label)
+      "Sources received :",
+      receivedSources.map((source) => source.label)
     );
+    setSources(receivedSources);
   });
 
+  const WebRTCSourceButton = (source: ISource, index: number) => {
+    return (
+      <button
+        className="button"
+        onClick={() => {
+          setIsSelected(index);
+        }}
+      >
+        {source.label}
+      </button>
+    );
+  };
+
   return (
-    <div>
-      <h1>WebRTC Portal</h1>
-      <div>
-        {players.map((player: IPlayer) => {
-          return <WebRTCSource {...player} />;
+    <div className="app">
+      <div className="buttons">
+        <button
+          className="button"
+          onClick={() => {
+            setIsSelected(-1);
+          }}
+        >
+          OFF
+        </button>
+        {sources.map((source: ISource, index: number) => {
+          return WebRTCSourceButton(source, index);
         })}{" "}
       </div>
+      {isSelected > -1 ? (
+        <iframe
+          className="video"
+          src={sources[isSelected].link.viewer}
+          title={sources[isSelected].label}
+          allow="autoplay"
+          allowFullScreen={true}
+        />
+      ) : null}
     </div>
   );
 };

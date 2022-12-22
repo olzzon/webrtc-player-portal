@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "axios": "^1.2.1",
+    "axios": "^0.27",
     "express": "^4.18.2",
     "http": "^0.0.1-security",
     "react": "^18.2.0",
@@ -18,9 +18,11 @@
   "devDependencies": {
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
+    "css-loader": "^6.7.3",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.2",
     "nodemon": "^2.0.20",
+    "pkg": "^5.8.0",
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
@@ -30,10 +32,23 @@
     "webpack-dev-server": "^4.11.1"
   },
   "scripts": {
-    "build-server": "ts-node src/server/index.ts",
+    "build-server": "tsc -p ./src/server",
     "build-client": "webpack --config webpack.client.config.js",
     "watch-client": "webpack --progress --config webpack.client.config.js",
     "start": "ts-node-dev src/server/index.ts",
-    "start-dev": "node --inspect -r ts-node/register src/server/index.ts"
+    "start-dev": "node --inspect -r ts-node/register src/server/index.ts",
+    "package": "pkg ."
+  },
+  "bin": {
+    "server": "./dist/server/index.js"
+  },
+  "pkg": {
+    "scripts": "./dist/server/index.js",
+    "assets": "./dist/client/**/*",
+    "targets": [
+      "node16-macos-arm64",
+      "node16-linux-x64"
+    ],
+    "outputPath": "package"
   }
 }
