@@ -13,9 +13,6 @@ body {
 .buttons {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 99vw;
     margin: 1vh;
 }
 
@@ -30,6 +27,7 @@ body {
 
 .video {
     margin-left: 2vw;
+    position: fixed;
     width: 95vw;
     height: 92vh;
     object-fit: cover;
