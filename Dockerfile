@@ -2,8 +2,11 @@
 FROM node:16.14-alpine
 RUN apk add --no-cache git
 WORKDIR /opt/webrtc-player-portal
+COPY package*.json ./
 RUN yarn --check-files --frozen-lockfile
-RUN yarn build
+COPY . .
+RUN yarn build-server
+RUN yarn build-client
 RUN yarn --check-files --frozen-lockfile --production --force
 RUN yarn cache clean
 
