@@ -9,6 +9,19 @@ console.log("socketClient :", socketClient);
 
 socketClient.emit(IO.GET_ALL_PLAYERS);
 
+const WebRTCSourceButton = (source: ISource, index: number, setIsSelected: any) => {
+  return (
+    <button
+      className="button"
+      onClick={() => {
+        setIsSelected(index);
+      }}
+    >
+      {source.label}
+    </button>
+  );
+};
+
 const App = () => {
   const [sources, setSources] = useState<ISource[]>([]);
   const [isSelected, setIsSelected] = useState<number>(-1);
@@ -17,22 +30,18 @@ const App = () => {
     console.log(
       "Sources received :",
       receivedSources.map((source) => source.label)
-    );
-    setSources(receivedSources);
+      );
+      const currentSource = sources[isSelected]?.link.viewer
+      const newSelectedIndex = receivedSources.findIndex((source)=> {
+        return (source.link.viewer === currentSource)
+      })
+      if (newSelectedIndex) {
+        setIsSelected(newSelectedIndex ?? -1)
+      } else {
+        setIsSelected(-1)
+      }
+      setSources(receivedSources);
   });
-
-  const WebRTCSourceButton = (source: ISource, index: number) => {
-    return (
-      <button
-        className="button"
-        onClick={() => {
-          setIsSelected(index);
-        }}
-      >
-        {source.label}
-      </button>
-    );
-  };
 
   return (
     <div className="app">
@@ -46,7 +55,7 @@ const App = () => {
           OFF
         </button>
         {sources.map((source: ISource, index: number) => {
-          return WebRTCSourceButton(source, index);
+          return WebRTCSourceButton(source, index, setIsSelected);
         })}{" "}
       </div>
       {isSelected > -1 ? (
