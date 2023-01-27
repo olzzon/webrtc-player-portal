@@ -1,0 +1,55 @@
+# main.yml
+# Workflow that build server, client and Docker and publish to Docker Hub and Github Package Registry
+name: Build and publish
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    tags:
+      - '*'
+  pull_request:
+    branches:
+      - main
+      - develop
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    container:
+      image: node
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+      - name: Install dependencies
+        with:
+          node-version: 14
+        run:
+          yarn
+      - name: Build
+        run: |
+          yarn build-server
+          yarn build-client          
+  cd:
+    runs-on: ubuntu-latest
+    needs: ci
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker login
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build
+        run: docker build .
+      - name: Tags
+        run: |
+          docker ${{ secrets.DOCKER_USER }}/webrtc-player-portal:${{ github.sha }}
+          docker ${{ secrets.DOCKER_USER }}/webrtc-player-portal:latest
+      - name: Push
+        run: |
+          docker push ${{ secrets.DOCKER_USER }}/webrtc-player-portal:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USER }}/webrtc-player-portal:latest
+      
+
+
+
