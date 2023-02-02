@@ -1,5 +1,5 @@
 // CLIENT to SERVER
-export const GET_ALL_PLAYERS = 'get_all_players'
+export const GET_SOURCES = 'get_sources'
 
 // SERVER to CLIENT
-export const ALL_PLAYERS = 'all_players'
+export const SOURCE_LIST = 'source_list'

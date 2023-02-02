@@ -7,7 +7,11 @@ import "../style/app.css";
 const socketClient = io();
 console.log("socketClient :", socketClient);
 
-socketClient.emit(IO.GET_ALL_PLAYERS);
+const urlParams = new URLSearchParams(window.location.search);
+const userGroup = urlParams.get("group") || "default";
+
+
+socketClient.emit(IO.GET_SOURCES, userGroup);
 
 const WebRTCSourceButton = (source: ISource, index: number, setIsSelected: any) => {
   return (
@@ -26,7 +30,7 @@ const App = () => {
   const [sources, setSources] = useState<ISource[]>([]);
   const [isSelected, setIsSelected] = useState<number>(-1);
 
-  socketClient.on(IO.ALL_PLAYERS, (receivedSources: ISource[]) => {
+  socketClient.on(IO.SOURCE_LIST, (receivedSources: ISource[]) => {
     console.log(
       "Sources received :",
       receivedSources.map((source) => source.label)
