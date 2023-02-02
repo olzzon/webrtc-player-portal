@@ -17,7 +17,7 @@ export const getSettings = (): ISource[] => {
       {
         url: "http://192.168.100.2:3900/linkurl",
         label: "Olzzon Basement",
-        usergroup: "default",
+        userGroup: "default",
         link: { viewer: "", guest: "", broadcast: "", director: "" },
       },
     ];

@@ -25,12 +25,12 @@ export const filterSourcesForClient = (
   sources: ISource[],
   userGroup: string
 ): ISource[] => {
-  let sourcelist = sources.map((source) => {
+  let sourcelist = sources.map((source: ISource) => {
     source.link = { viewer: "", guest: "", broadcast: "", director: "" };
     return source;
   });
-  sourcelist = sourcelist.filter((source) => {
-    return !source.usergroup || source.usergroup === userGroup
+  sourcelist = sourcelist.filter((source: ISource) => {
+    return !source.userGroup || source.userGroup === userGroup
   });
   return sourcelist;
 };

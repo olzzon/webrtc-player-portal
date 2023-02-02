@@ -8,7 +8,7 @@ export interface IRESTresponse {
 export interface ISource {
   url: string;
   label: string;
-  usergroup?: string;
+  userGroup?: string;
   link: IRESTresponse;
 }
 
