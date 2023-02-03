@@ -1,0 +1,10 @@
+version: "3"
+services:
+  app:
+    image: 'olzzon/webrtc-player-portal:latest'
+    restart: always
+    ports:
+      - '3910:3910' # Public HTTP Port
+
+    volumes:
+       - ./:/root
