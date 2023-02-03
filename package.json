@@ -36,7 +36,7 @@
     "build-client": "webpack --config webpack.client.config.js",
     "build-client-dev": "webpack --config webpack.client-dev.config.js",
     "watch-client": "webpack --progress --config webpack.client.config.js",
-    "start": "ts-node-dev src/server/index.ts",
+    "start": "node dist/server/index.js",
     "start-dev": "node --inspect -r ts-node/register src/server/index.ts",
     "package": "pkg ."
   },
