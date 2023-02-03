@@ -26,7 +26,8 @@ export const filterSourcesForClient = (
   userGroup: string
 ): ISource[] => {
   let sourcelist = sources.map((source: ISource) => {
-    source.link = { viewer: "", guest: "", broadcast: "", director: "" };
+    source.url = "";
+    source.link = { viewer: source.link.viewer, guest: "", broadcast: "", director: "" };
     return source;
   });
   sourcelist = sourcelist.filter((source: ISource) => {
