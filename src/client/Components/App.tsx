@@ -10,10 +10,13 @@ console.log("socketClient :", socketClient);
 const urlParams = new URLSearchParams(window.location.search);
 const userGroup = urlParams.get("group") || "default";
 
-
 socketClient.emit(IO.GET_SOURCES, userGroup);
 
-const WebRTCSourceButton = (source: ISource, index: number, setIsSelected: any) => {
+const WebRTCSourceButton = (
+  source: ISource,
+  index: number,
+  setIsSelected: any
+) => {
   return (
     <button
       className="button"
@@ -34,17 +37,14 @@ const App = () => {
     console.log(
       "Sources received :",
       receivedSources.map((source) => source.label)
-      );
-      const currentSource = sources[isSelected]?.link.viewer
-      const newSelectedIndex = receivedSources.findIndex((source)=> {
-        return (source.link.viewer === currentSource)
+    );
+    const currentSource = sources[isSelected]?.link.viewer;
+    setIsSelected(
+      receivedSources.findIndex((source) => {
+        return source.link.viewer === currentSource;
       })
-      if (newSelectedIndex) {
-        setIsSelected(newSelectedIndex ?? -1)
-      } else {
-        setIsSelected(-1)
-      }
-      setSources(receivedSources);
+    );
+    setSources(receivedSources);
   });
 
   return (
