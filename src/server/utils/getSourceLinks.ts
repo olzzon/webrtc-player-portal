@@ -8,7 +8,7 @@ export const getSourceLinks = async (
     sourceList.map(async (source) => {
       try {
         const links = await axios.get(source.url);
-        console.log("Data received from", source.label, " : ", links.data);
+        console.log("Data received from", source.label);
         source.link = links.data;
         return source;
       } catch (e) {

@@ -24,14 +24,13 @@ const updateSourceLinkstimer = setInterval(() => {
 
 io.on("connection", (socket: any) => {
   console.log("User connected :", socket.id);
-  let clientUserGroup = "default";
+  let clientUserGroup: string;
 
   let oldSourceLinks: ISource[] = [];
   const sendSourcesToClient = () => {
     if (JSON.stringify(oldSourceLinks) !== JSON.stringify(sourceLinks)) {
-      // ToDo: Only send souces allowed for client
       const clientSideSources = filterSourcesForClient(sourceLinks, clientUserGroup);
-      console.log("Sending sources", clientSideSources);
+      console.log("Sending sources");
       socket.emit(IO.SOURCE_LIST, clientSideSources);
       oldSourceLinks = sourceLinks;
     }
