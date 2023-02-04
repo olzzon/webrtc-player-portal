@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { ISource } from "../../sharedcode/interfaces";
 import * as IO from "../../sharedcode/IO_CONSTANTS";
@@ -33,19 +33,21 @@ const App = () => {
   const [sources, setSources] = useState<ISource[]>([]);
   const [isSelected, setIsSelected] = useState<number>(-1);
 
-  socketClient.on(IO.SOURCE_LIST, (receivedSources: ISource[]) => {
-    console.log(
-      "Sources received :",
-      receivedSources.map((source) => source.label)
-    );
-    const currentSource = sources[isSelected]?.link.viewer;
-    setIsSelected(
-      receivedSources.findIndex((source) => {
-        return source.link.viewer === currentSource;
-      })
-    );
-    setSources(receivedSources);
-  });
+  useEffect(() => {
+    socketClient.on(IO.SOURCE_LIST, (receivedSources: ISource[]) => {
+      console.log(
+        "Sources received :",
+        receivedSources.map((source) => source.label)
+      );
+      const currentSource = sources[isSelected]?.link.viewer;
+      setIsSelected(
+        receivedSources.findIndex((source) => {
+          return source.link.viewer === currentSource;
+        })
+      );
+      setSources(receivedSources);
+    });
+  }, []);
 
   return (
     <div className="app">
