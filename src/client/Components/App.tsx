@@ -15,13 +15,14 @@ socketClient.emit(IO.GET_SOURCES, userGroup);
 const WebRTCSourceButton = (
   source: ISource,
   index: number,
-  setIsSelected: any
+  changeSelectedSource: any
 ) => {
   return (
     <button
       className="button"
       onClick={() => {
-        setIsSelected(index);
+        console.log("Button clicked : ", source.label);        
+        changeSelectedSource(index);
       }}
     >
       {source.label}
@@ -38,12 +39,6 @@ const App = () => {
       console.log(
         "Sources received :",
         receivedSources.map((source) => source.label)
-      );
-      const currentSource = sources[isSelected]?.link.viewer;
-      setIsSelected(
-        receivedSources.findIndex((source) => {
-          return source.link.viewer === currentSource;
-        })
       );
       setSources(receivedSources);
     });
