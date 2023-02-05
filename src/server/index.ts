@@ -55,7 +55,7 @@ io.on("connection", (socket: any) => {
 app.get("/", (req: Request, res: Response) => {
   console.log("GET request", req.url);
   let changedHTML: string = fs.readFileSync(path.join(__dirname, '../../dist/client/index.html'), 'utf8');
-  changedHTML = changedHTML.replace('source_filter', req.url.substring(req.url.indexOf('group=')+6));
+  changedHTML = changedHTML.replace('source_filter', req.headers.authorization || 'default');
   res.send(changedHTML)
 });
 
