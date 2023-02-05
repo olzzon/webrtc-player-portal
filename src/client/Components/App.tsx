@@ -7,8 +7,9 @@ import "../style/app.css";
 const socketClient = io();
 console.log("socketClient :", socketClient);
 
-const urlParams = new URLSearchParams(window.location.search);
-const userGroup = urlParams.get("group") || "default";
+// const urlParams = new URLSearchParams(window.location.search);
+//@ts-ignore
+const userGroup = LOGIN_GROUP // urlParams.get("group") || "default";
 
 socketClient.emit(IO.GET_SOURCES, userGroup);
 

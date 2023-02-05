@@ -1,14 +1,13 @@
-const express = require("express");
-const app = express();
+import express, { Express, Request, Response } from 'express'
+const app: Express = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 const path = require("path");
+const fs = require("fs");
 import * as IO from "../sharedcode/IO_CONSTANTS";
 import { ISource } from "../sharedcode/interfaces";
 import { filterSourcesForClient, getSourceLinks } from "./utils/getSourceLinks";
 import { getSettings } from "./utils/storage";
-
-
 
 let sourceList: ISource[] = [];
 let sourceLinks: ISource[] = [];
@@ -29,7 +28,10 @@ io.on("connection", (socket: any) => {
   let oldSourceLinks: ISource[] = [];
   const sendSourcesToClient = () => {
     if (JSON.stringify(oldSourceLinks) !== JSON.stringify(sourceLinks)) {
-      const clientSideSources = filterSourcesForClient(sourceLinks, clientUserGroup);
+      const clientSideSources = filterSourcesForClient(
+        sourceLinks,
+        clientUserGroup
+      );
       console.log("Sending sources");
       socket.emit(IO.SOURCE_LIST, clientSideSources);
       oldSourceLinks = sourceLinks;
@@ -50,6 +52,12 @@ io.on("connection", (socket: any) => {
 });
 
 
-app.use("/", express.static(path.resolve(__dirname, "../../dist/client")));
-server.listen(3910);
-console.log("Server started on port 3910");
+app.get("/", (req: Request, res: Response) => {
+  console.log("GET request", req.url);
+  let changedHTML: string = fs.readFileSync(path.join(__dirname, '../../dist/client/index.html'), 'utf8');
+  changedHTML = changedHTML.replace('source_filter', req.url.substring(req.url.indexOf('group=')+6));
+  res.send(changedHTML)
+});
+
+app.use(express.static(path.join(__dirname, '../../dist/client')));
+server.listen(3910, () => console.log("Server started on port 3910"));
