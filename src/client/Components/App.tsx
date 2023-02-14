@@ -7,11 +7,13 @@ import "../style/app.css";
 const socketClient = io();
 console.log("socketClient :", socketClient);
 
-// const urlParams = new URLSearchParams(window.location.search);
-//@ts-ignore
-const userGroup = LOGIN_GROUP // urlParams.get("group") || "default";
-
-socketClient.emit(IO.GET_SOURCES, userGroup);
+fetch(window.location.href + "oauth2/userinfo")
+  .then((res) => res.json())
+  .then((res) => {
+    console.log("userinfo group response :", res.groups);
+    const userGroups = res.groups || [];
+    socketClient.emit(IO.GET_SOURCES, userGroups);
+  });
 
 const WebRTCSourceButton = (
   source: ISource,
@@ -22,7 +24,7 @@ const WebRTCSourceButton = (
     <button
       className="button"
       onClick={() => {
-        console.log("Button clicked : ", source.label);        
+        console.log("Button clicked : ", source.label);
         changeSelectedSource(index);
       }}
     >

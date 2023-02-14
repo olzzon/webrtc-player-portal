@@ -1,9 +1,10 @@
-import express, { Express, Request, Response } from 'express'
+import express, { Express, Request, Response } from "express";
 const app: Express = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 const path = require("path");
 const fs = require("fs");
+
 import * as IO from "../sharedcode/IO_CONSTANTS";
 import { ISource } from "../sharedcode/interfaces";
 import { filterSourcesForClient, getSourceLinks } from "./utils/getSourceLinks";
@@ -23,14 +24,14 @@ const updateSourceLinkstimer = setInterval(() => {
 
 io.on("connection", (socket: any) => {
   console.log("User connected :", socket.id);
-  let clientUserGroup: string;
+  let clientUserGroups: string[];
 
   let oldSourceLinks: ISource[] = [];
   const sendSourcesToClient = () => {
     if (JSON.stringify(oldSourceLinks) !== JSON.stringify(sourceLinks)) {
       const clientSideSources = filterSourcesForClient(
         sourceLinks,
-        clientUserGroup
+        clientUserGroups
       );
       console.log("Sending sources");
       socket.emit(IO.SOURCE_LIST, clientSideSources);
@@ -40,8 +41,8 @@ io.on("connection", (socket: any) => {
   const thisClientTimer = setInterval(() => sendSourcesToClient(), 1000);
 
   socket
-    .on(IO.GET_SOURCES, (userGroup: string) => {
-      clientUserGroup = userGroup;
+    .on(IO.GET_SOURCES, (userGroups: string[]) => {
+      clientUserGroups = userGroups;
       console.log("GET_ALL_PLAYERS");
       sendSourcesToClient();
     })
@@ -51,13 +52,14 @@ io.on("connection", (socket: any) => {
     });
 });
 
-
 app.get("/", (req: Request, res: Response) => {
   console.log("GET request", req.url);
-  let changedHTML: string = fs.readFileSync(path.join(__dirname, '../../dist/client/index.html'), 'utf8');
-  changedHTML = changedHTML.replace('source_filter', req.headers.authorization || 'default');
-  res.send(changedHTML)
+  let changedHTML: string = fs.readFileSync(
+    path.join(__dirname, "../../dist/client/index.html"),
+    "utf8"
+  );
+  res.send(changedHTML);
 });
 
-app.use(express.static(path.join(__dirname, '../../dist/client')));
+app.use(express.static(path.join(__dirname, "../../dist/client")));
 server.listen(3910, () => console.log("Server started on port 3910"));

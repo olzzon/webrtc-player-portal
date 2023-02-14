@@ -27,5 +27,5 @@ export const getSettings = (): ISource[] => {
 };
 
 export const saveSettings = (settings: ISource[]): void => {  
-  fs.writeFileSync(SETTINGS_FILE, JSON.stringify(filterSourcesForClient(settings, 'default')));
+  fs.writeFileSync(SETTINGS_FILE, JSON.stringify(filterSourcesForClient(settings, ['default'])));
 };

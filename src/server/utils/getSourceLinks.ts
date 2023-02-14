@@ -23,7 +23,7 @@ export const getSourceLinks = async (
 
 export const filterSourcesForClient = (
   sources: ISource[],
-  userGroup: string
+  userGroups: string[]
 ): ISource[] => {
   let sourcelist = sources.map((source: ISource) => {
     source.url = "";
@@ -31,7 +31,7 @@ export const filterSourcesForClient = (
     return source;
   });
   sourcelist = sourcelist.filter((source: ISource) => {
-    return !source.userGroup || source.userGroup === userGroup
+    return !source.userGroup || userGroups.includes(source.userGroup)
   });
   return sourcelist;
 };
