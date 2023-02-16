@@ -31,7 +31,7 @@ export const filterSourcesForClient = (
     return source;
   });
   sourcelist = sourcelist.filter((source: ISource) => {
-    return !source.userGroup || userGroups.includes(source.userGroup)
+    return !source.userGroup || userGroups?.includes(source.userGroup)
   });
   return sourcelist;
 };
