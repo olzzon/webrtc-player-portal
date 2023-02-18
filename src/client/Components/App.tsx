@@ -7,13 +7,18 @@ import "../style/app.css";
 const socketClient = io();
 console.log("socketClient :", socketClient);
 
-fetch(window.location.href + "oauth2/userinfo")
-  .then((res) => res.json())
-  .then((res) => {
-    console.log("userinfo group response :", res.groups);
-    const userGroups = res.groups || [];
-    socketClient.emit(IO.GET_SOURCES, userGroups);
-  });
+socketClient.on("connect", () => {
+  fetch(window.location.href + "oauth2/userinfo")
+    .then((res) => res.json())
+    .then((res) => {
+      console.log("userinfo group response :", res.groups);
+      const userGroups = res.groups || [];
+      socketClient.emit(IO.GET_SOURCES, userGroups);
+    })
+    .catch((err) => {
+      console.log("No authorization groups recevied :", err);
+    });    
+});
 
 const WebRTCSourceButton = (
   source: ISource,
