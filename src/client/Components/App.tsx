@@ -7,8 +7,9 @@ import "../style/app.css";
 const socketClient = io();
 console.log("socketClient :", socketClient);
 
+const hostUrl = new URL(window.location.href).origin;
 socketClient.on("connect", () => {
-  fetch(window.location.href + "oauth2/userinfo")
+  fetch(hostUrl + "/oauth2/userinfo")
     .then((res) => res.json())
     .then((res) => {
       console.log("userinfo group response :", res.groups);
@@ -55,7 +56,7 @@ const App = () => {
   return (
     <div className="app">
       <div className="buttons">
-      <a className="login" href={window.location.href + "oauth2/sign_out?rd=" + window.location.href + "index.html"}>
+      <a className="login" href={hostUrl + "/oauth2/sign_out?rd=" + hostUrl}>
           LOGOUT
         </a>
         <button
