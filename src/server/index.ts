@@ -52,14 +52,6 @@ io.on("connection", (socket: any) => {
     });
 });
 
-app.get("/", (req: Request, res: Response) => {
-  console.log("GET request", req.url);
-  let changedHTML: string = fs.readFileSync(
-    path.join(__dirname, "../../dist/client/index.html"),
-    "utf8"
-  );
-  res.send(changedHTML);
-});
+app.use("/", express.static(path.resolve(__dirname, "../../dist/client")));
 
-app.use(express.static(path.join(__dirname, "../../dist/client")));
 server.listen(3910, () => console.log("Server started on port 3910"));
