@@ -17,7 +17,7 @@ socketClient.on("connect", () => {
     })
     .catch((err) => {
       console.log("No authorization groups recevied :", err);
-    });    
+    });
 });
 
 const WebRTCSourceButton = (
@@ -55,6 +55,9 @@ const App = () => {
   return (
     <div className="app">
       <div className="buttons">
+      <a className="logout" href={window.location.href + "oauth2/start"}>
+          LOGOUT
+        </a>
         <button
           className="button"
           onClick={() => {
