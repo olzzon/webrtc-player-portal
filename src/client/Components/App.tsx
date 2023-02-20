@@ -55,8 +55,8 @@ const App = () => {
   return (
     <div className="app">
       <div className="buttons">
-      <a className="login" href={window.location.href + "oauth2/start?rd=" + window.location.href}>
-          change user
+      <a className="login" href={window.location.href + "oauth2/sign_out?rd=" + window.location.href}>
+          LOGOUT
         </a>
         <button
           className="button"
