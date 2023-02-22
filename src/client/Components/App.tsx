@@ -53,11 +53,11 @@ const App = () => {
     });
   }, []);
 
-//  hostUrl + "/oauth2/sign_out?rd=" + hostUrl + "/oauth2/start?rd=" + hostUrl}>
   return (
     <div className="app">
       <div className="buttons">
-        <a className="button-login" href="https://login.microsoftonline.com/microsoftolzzon.onmicrosoft.com/oauth2/logout?post_logout_redirect_uri=https://returvideo.olzzon.cloud/oauth2/sign_out?rd=https://returvideo.olzzon.cloud">
+        <a className="button-login" href={hostUrl + "/logout"}>
+        LOGOUT
         </a>
         <button
           className="button"
