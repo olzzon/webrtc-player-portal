@@ -21,18 +21,8 @@ services:
       - OAUTH2_PROXY_SESSION_STORE_TYPE=redis
       - OAUTH2_PROXY_REDIS_CONNECTION_URL=redis://redis
       - OAUTH2_PROXY_PASS_AUTHORIZATION_HEADER=true
-      - OAUTH2_PROXY_COOKIE-SECURE=false
+      - OAUTH2_PROXY_PASS_USER_HEADERS=true
+      - OAUTH2_PROXY_COOKIE_DOMAIN=*
+      - OAUTH2_PROXY_COOKIE-SECURE=true
       # For some reason Azure does not respond with an email, so this is a workaround:
       - OAUTH2_PROXY_OIDC_EMAIL_CLAIM=sub
-
-  redis:
-    image: redis:7.0.2-alpine3.16
-    ports:
-      - 6379:6379
-    volumes:
-      - cache:/data
-
-volumes:
-  cache:
-    driver: local
-
