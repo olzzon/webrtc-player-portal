@@ -3,13 +3,18 @@ import { io } from "socket.io-client";
 import { ISource } from "../../sharedcode/interfaces";
 import * as IO from "../../sharedcode/IO_CONSTANTS";
 import "../style/app.css";
+//@ts-ignore
+import logoutLogo from "../assets/logout-logo.png";
 
 const socketClient = io();
 console.log("socketClient :", socketClient);
 
 const hostUrl = new URL(window.location.href).origin;
+const USERINFO_URL = hostUrl + "/oauth2/userinfo";
+const LOGOUT_URL = hostUrl + "/logout";
+
 socketClient.on("connect", () => {
-  fetch(hostUrl + "/oauth2/userinfo")
+  fetch(USERINFO_URL)
     .then((res) => res.json())
     .then((res) => {
       console.log("userinfo group response :", res.groups);
@@ -56,8 +61,14 @@ const App = () => {
   return (
     <div className="app">
       <div className="buttons">
-        <a className="button-login" href={hostUrl + "/logout"}>
-        LOGOUT
+        <a className="button-logout" href={LOGOUT_URL}>
+          <img
+            className="logout-logo"
+            src={logoutLogo}
+            alt="Logout"
+            width="40"
+            height="40"
+          />
         </a>
         <button
           className="button"

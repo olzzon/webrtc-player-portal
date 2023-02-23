@@ -25,14 +25,20 @@ body {
     font-size: 1.4rem;
 }
 
-
-.button-login {
+.button-logout {
     color: white;
     background-color: rgb(88, 13, 13);
-    margin-left: 0px;
-    width: 4vw;
-    height: 2vh;
+    border-radius: 1rem;
+    margin-top: 0.2vh;
+    margin-left: -0.7vw;
+    width: 2vw;
+    height: 4vh;
     font-size: 0.9rem;
+}
+
+.logo-logout {
+    margin-top: 0.1vh;
+    margin-left: 0.1vw;
 }
 
 .video {
