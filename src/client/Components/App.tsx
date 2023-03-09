@@ -47,6 +47,7 @@ const WebRTCSourceButton = (
 const App = () => {
   const [sources, setSources] = useState<ISource[]>([]);
   const [isSelected, setIsSelected] = useState<number>(-1);
+  const [isLoRes, setIsLoRes] = useState<boolean>(false);
 
   useEffect(() => {
     socketClient.on(IO.SOURCE_LIST, (receivedSources: ISource[]) => {
@@ -71,7 +72,15 @@ const App = () => {
           />
         </a>
         <button
-          className="button"
+          className={isLoRes ? "button-lo-res-on" : "button-lo-res-off"}
+          onClick={() => {
+            setIsLoRes(!isLoRes);
+          }}
+        >
+          LO RES
+        </button>        
+        <button
+          className="button-off"
           onClick={() => {
             setIsSelected(-1);
           }}
@@ -85,7 +94,7 @@ const App = () => {
       {isSelected > -1 ? (
         <iframe
           className="video"
-          src={sources[isSelected].link.viewer}
+          src={isLoRes ? sources[isSelected].link.lores : sources[isSelected].link.viewer}
           title={sources[isSelected].label}
           allow="autoplay"
           allowFullScreen={true}

@@ -3,6 +3,7 @@ export interface IRESTresponse {
   guest: string;
   broadcast: string;
   director: string;
+  lores: string;
 }
 
 export interface ISource {

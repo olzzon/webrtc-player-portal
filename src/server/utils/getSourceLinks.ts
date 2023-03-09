@@ -9,6 +9,7 @@ export const getSourceLinks = async (
       try {
         const links = await axios.get(source.url);
         source.link = links.data;
+        source.link.lores ? null : (source.link.lores = source.link.viewer);
         return source;
       } catch (e) {
         console.log("Error getting REST from WebRTC ", source.label, " : ", e);
@@ -27,7 +28,7 @@ export const filterSourcesForClient = (
 ): ISource[] => {
   let sourcelist = sources.map((source: ISource) => {
     source.url = "";
-    source.link = { viewer: source.link.viewer, guest: "", broadcast: "", director: "" };
+    source.link = { viewer: source.link.viewer, guest: "", broadcast: "", director: "", lores: source.link.lores };
     return source;
   });
   sourcelist = sourcelist.filter((source: ISource) => {
