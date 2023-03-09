@@ -35,23 +35,25 @@ body {
 }
 
 .button-lo-res-off {
-    color: white;
-    background-color: rgb(47, 39, 39);
+    color: rgb(169, 169, 169);
+    background-color: rgb(25, 22, 22);
     margin-left: 1vw;
     width: 10vw;
+    max-width: 80px;
     height: 5vh;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     border-radius: 2rem;
 }
 
 
 .button-lo-res-on {
-    color: white;
+    color: rgb(255, 255, 255);
     background-color: rgb(18, 122, 15);
     margin-left: 1vw;
     width: 10vw;
+    max-width: 80px;
     height: 5vh;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     border-radius: 2rem;
 }
 
