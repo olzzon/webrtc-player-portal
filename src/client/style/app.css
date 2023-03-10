@@ -24,6 +24,15 @@ body {
     font-size: 1.4rem;
 }
 
+.button-selected {
+    color: white;
+    background-color: rgb(9, 69, 7);
+    margin-left: 1vw;
+    width: 15vw;
+    height: 6vh;
+    font-size: 1.4rem;
+}
+
 .button-off {
     color: white;
     background-color: rgb(47, 39, 39);

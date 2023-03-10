@@ -3,8 +3,6 @@ import { io } from "socket.io-client";
 import { ISource } from "../../sharedcode/interfaces";
 import * as IO from "../../sharedcode/IO_CONSTANTS";
 import "../style/app.css";
-//@ts-ignore
-import logoutLogo from "../assets/logout-logo.png";
 
 const socketClient = io();
 console.log("socketClient :", socketClient);
@@ -26,24 +24,6 @@ socketClient.on("connect", () => {
     });
 });
 
-const WebRTCSourceButton = (
-  source: ISource,
-  index: number,
-  changeSelectedSource: any
-) => {
-  return (
-    <button
-      className="button"
-      onClick={() => {
-        console.log("Button clicked : ", source.label);
-        changeSelectedSource(index);
-      }}
-    >
-      {source.label}
-    </button>
-  );
-};
-
 const App = () => {
   const [sources, setSources] = useState<ISource[]>([]);
   const [isSelected, setIsSelected] = useState<number>(-1);
@@ -63,7 +43,9 @@ const App = () => {
     <div className="app">
       <div className="buttons">
         <p className="button-logout">
-          <a className="button-logout-href" href={LOGOUT_URL}>LOG OUT</a>
+          <a className="button-logout-href" href={LOGOUT_URL}>
+            LOG OUT
+          </a>
         </p>
         <button
           className={isLoRes ? "button-lo-res-on" : "button-lo-res-off"}
@@ -82,7 +64,15 @@ const App = () => {
           OFF
         </button>
         {sources.map((source: ISource, index: number) => {
-          return WebRTCSourceButton(source, index, setIsSelected);
+          return <button
+            className={index !== isSelected ? "button" : "button-selected"}
+            onClick={() => {
+              console.log("Button clicked : ", source.label);
+              setIsSelected(index);
+            }}
+          >
+            {source.label}
+          </button>;
         })}{" "}
       </div>
       {isSelected > -1 ? (
