@@ -62,15 +62,9 @@ const App = () => {
   return (
     <div className="app">
       <div className="buttons">
-        <a className="button-logout" href={LOGOUT_URL}>
-          <img
-            className="logout-logo"
-            src={logoutLogo}
-            alt="Logout"
-            width="40"
-            height="40"
-          />
-        </a>
+        <p className="button-logout">
+          <a className="button-logout-href" href={LOGOUT_URL}>LOG OUT</a>
+        </p>
         <button
           className={isLoRes ? "button-lo-res-on" : "button-lo-res-off"}
           onClick={() => {
@@ -78,7 +72,7 @@ const App = () => {
           }}
         >
           LO RES
-        </button>        
+        </button>
         <button
           className="button-off"
           onClick={() => {
@@ -94,7 +88,11 @@ const App = () => {
       {isSelected > -1 ? (
         <iframe
           className="video"
-          src={isLoRes ? sources[isSelected].link.lores : sources[isSelected].link.viewer}
+          src={
+            isLoRes
+              ? sources[isSelected].link.lores
+              : sources[isSelected].link.viewer
+          }
           title={sources[isSelected].label}
           allow="autoplay"
           allowFullScreen={true}
