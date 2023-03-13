@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express } from "express";
 const app: Express = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
@@ -7,17 +7,21 @@ const fs = require("fs");
 
 import * as IO from "../sharedcode/IO_CONSTANTS";
 import { ISource } from "../sharedcode/interfaces";
-import { filterSourcesForClient, getSourceLinks } from "./utils/getSourceLinks";
+import { filterSourcesForClient, getSourceLinks, updateRecievedSourceLink } from "./utils/getSourceLinks";
 import { getSettings } from "./utils/storage";
 
-let sourceList: ISource[] = [];
+let oldSettings: ISource[] = [];
 let sourceLinks: ISource[] = [];
 const updateSourceListTimer = setInterval(() => {
-  sourceList = getSettings();
+  const settings = getSettings();
+  if (JSON.stringify(settings) !== JSON.stringify(oldSettings)) {
+    oldSettings = settings;
+    sourceLinks = JSON.parse(JSON.stringify(settings));
+  }
 }, 10000);
 
 const updateSourceLinkstimer = setInterval(() => {
-  getSourceLinks(sourceList).then((newSourceLinks) => {
+  getSourceLinks(sourceLinks).then((newSourceLinks) => {
     sourceLinks = newSourceLinks;
   });
 }, 10000);
@@ -53,5 +57,13 @@ io.on("connection", (socket: any) => {
 });
 
 app.use("/", express.static(path.resolve(__dirname, "../../dist/client")));
+app.use("/updatelink", express.json());
+
+app.post('/updatelink', (req, res) => {
+  sourceLinks = updateRecievedSourceLink(sourceLinks, req.body.id, req.body.link);
+  console.log("Received Request : ", req.body);
+  res.send('ok');
+});
+
 
 server.listen(3910, () => console.log("Server started on port 3910"));
