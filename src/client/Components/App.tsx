@@ -35,7 +35,7 @@ const App = () => {
         "Sources received :",
         receivedSources.map((source) => source.label)
       );
-      setSources(receivedSources);
+      setSources([...receivedSources]);
     });
   }, []);
 
@@ -64,15 +64,20 @@ const App = () => {
           OFF
         </button>
         {sources.map((source: ISource, index: number) => {
-          return <button
-            className={index !== isSelected ? "button" : "button-selected"}
-            onClick={() => {
-              console.log("Button clicked : ", source.label);
-              setIsSelected(index);
-            }}
-          >
-            {source.label}
-          </button>;
+          return (
+            <button
+              style={
+                source.link.viewer ? { color: "white" } : { color: "#111111" }
+              }
+              className={index !== isSelected ? "button" : "button-selected"}
+              onClick={() => {
+                console.log("Button clicked : ", source.label);
+                setIsSelected(index);
+              }}
+            >
+              {source.label}
+            </button>
+          );
         })}{" "}
       </div>
       {isSelected > -1 ? (

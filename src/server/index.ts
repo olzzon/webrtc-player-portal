@@ -7,7 +7,11 @@ const fs = require("fs");
 
 import * as IO from "../sharedcode/IO_CONSTANTS";
 import { ISource } from "../sharedcode/interfaces";
-import { filterSourcesForClient, getSourceLinks, updateRecievedSourceLink } from "./utils/getSourceLinks";
+import {
+  filterSourcesForClient,
+  getSourceLinks,
+  updateRecievedSourceLink,
+} from "./utils/getSourceLinks";
 import { getSettings } from "./utils/storage";
 
 let oldSettings: ISource[] = [];
@@ -22,24 +26,24 @@ const updateSourceListTimer = setInterval(() => {
 
 const updateSourceLinkstimer = setInterval(() => {
   getSourceLinks(sourceLinks).then((newSourceLinks) => {
-    sourceLinks = newSourceLinks;
+    sourceLinks = JSON.parse(JSON.stringify(newSourceLinks));
   });
 }, 10000);
 
 io.on("connection", (socket: any) => {
   console.log("User connected :", socket.id);
   let clientUserGroups: string[];
+  let clientsOldSourceLinks: ISource[] = [];
 
-  let oldSourceLinks: ISource[] = [];
   const sendSourcesToClient = () => {
-    if (JSON.stringify(oldSourceLinks) !== JSON.stringify(sourceLinks)) {
+    if (JSON.stringify(clientsOldSourceLinks) !== JSON.stringify(sourceLinks)) {
       const clientSideSources = filterSourcesForClient(
         sourceLinks,
         clientUserGroups
       );
       console.log("Sending sources");
       socket.emit(IO.SOURCE_LIST, clientSideSources);
-      oldSourceLinks = sourceLinks;
+      clientsOldSourceLinks = JSON.parse(JSON.stringify(sourceLinks));
     }
   };
   const thisClientTimer = setInterval(() => sendSourcesToClient(), 1000);
@@ -59,11 +63,14 @@ io.on("connection", (socket: any) => {
 app.use("/", express.static(path.resolve(__dirname, "../../dist/client")));
 app.use("/updatelink", express.json());
 
-app.post('/updatelink', (req, res) => {
-  sourceLinks = updateRecievedSourceLink(sourceLinks, req.body.id, req.body.link);
+app.post("/updatelink", (req, res) => {
+  sourceLinks = updateRecievedSourceLink(
+    sourceLinks,
+    req.body.id,
+    req.body.link
+  );
   console.log("Received Request : ", req.body);
-  res.send('ok');
+  res.send("ok");
 });
-
 
 server.listen(3910, () => console.log("Server started on port 3910"));

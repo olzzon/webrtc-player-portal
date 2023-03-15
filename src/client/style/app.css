@@ -16,7 +16,6 @@ body {
 }
 
 .button {
-    color: white;
     background-color: rgb(47, 39, 39);
     margin-left: 1vw;
     width: 15vw;
@@ -25,7 +24,6 @@ body {
 }
 
 .button-selected {
-    color: white;
     background-color: rgb(92, 92, 92);
     margin-left: 1vw;
     width: 15vw;
