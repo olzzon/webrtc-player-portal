@@ -8,26 +8,22 @@ const fs = require("fs");
 import * as IO from "../sharedcode/IO_CONSTANTS";
 import { ISource } from "../sharedcode/interfaces";
 import {
+  checkIfSourceLinksAreOld,
   filterSourcesForClient,
-  getSourceLinks,
   updateRecievedSourceLink,
-} from "./utils/getSourceLinks";
+  updateSettingsInSourceLinks
+} from "./utils/handleSourceLinks";
 import { getSettings } from "./utils/storage";
 
 let oldSettings: ISource[] = [];
 let sourceLinks: ISource[] = [];
 const updateSourceListTimer = setInterval(() => {
   const settings = getSettings();
-  if (JSON.stringify(settings) !== JSON.stringify(oldSettings)) {
+  if (JSON.stringify(settings) !== JSON.stringify(oldSettings)) {    
     oldSettings = settings;
-    sourceLinks = JSON.parse(JSON.stringify(settings));
+    sourceLinks = updateSettingsInSourceLinks(sourceLinks, settings);
   }
-}, 10000);
-
-const updateSourceLinkstimer = setInterval(() => {
-  getSourceLinks(sourceLinks).then((newSourceLinks) => {
-    sourceLinks = JSON.parse(JSON.stringify(newSourceLinks));
-  });
+  sourceLinks = checkIfSourceLinksAreOld(sourceLinks);
 }, 10000);
 
 io.on("connection", (socket: any) => {
@@ -66,8 +62,8 @@ app.use("/updatelink", express.json());
 app.post("/updatelink", (req, res) => {
   sourceLinks = updateRecievedSourceLink(
     sourceLinks,
-    req.body.id,
-    req.body.link
+    req.body?.id,
+    req.body?.link
   );
   console.log("Received Request : ", req.body);
   res.send("ok");

@@ -7,10 +7,10 @@ export interface IRESTresponse {
 }
 
 export interface ISource {
-  id?: string;
-  url: string;
+  id: string;
   label: string;
   userGroup?: string;
+  linkUpdateTime?: number;
   link: IRESTresponse;
 }
 
