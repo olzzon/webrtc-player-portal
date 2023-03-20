@@ -31,10 +31,6 @@ const App = () => {
 
   useEffect(() => {
     socketClient.on(IO.SOURCE_LIST, (receivedSources: ISource[]) => {
-      console.log(
-        "Sources received :",
-        receivedSources.map((source) => source.label)
-      );
       if (isSelected > -1 && receivedSources.length > 0) {
         const newSelected = receivedSources.findIndex(
           (source) => source.id === sources[isSelected].id
@@ -43,7 +39,7 @@ const App = () => {
       }
       setSources([...receivedSources]);
     });
-  }, []);
+  }, [isSelected]);
 
   return (
     <div className="app">
