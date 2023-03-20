@@ -66,6 +66,7 @@ const App = () => {
         {sources.map((source: ISource, index: number) => {
           return (
             <button
+              key={source.id}
               style={
                 source.link.viewer ? { color: "white" } : { color: "#111111" }
               }
