@@ -50,6 +50,12 @@ export const getSettings = (): ISource[] => {
 };
 
 export const saveSettings = (settings: ISource[]): void => {
+  if (fs.existsSync(SETTINGS_FILE)) {
+    const backupFilename = SETTINGS_FILE + Date.now().toString() + ".bak";
+    console.log("Backing up settings file to :", backupFilename);
+    
+    fs.copyFileSync(SETTINGS_FILE, backupFilename);
+  }
   fs.writeFileSync(
     SETTINGS_FILE,
     JSON.stringify(filterSourcesForClient(settings, ["default"]))
