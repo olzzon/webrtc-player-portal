@@ -13,6 +13,8 @@ export const getSettings = (): ISource[] => {
     data = data.map((source) => {
       if (!source.id) {
         console.error("Error reading settings file, no id found");        
+      } else if (data.find((otherSources) => otherSources.id === source.id) !== source) {
+        console.error("Error reading settings file, duplicate id found");
       }
       if (!source.userGroup) {
         source.userGroup = "";

@@ -10,6 +10,7 @@ import { ISource } from "../sharedcode/interfaces";
 import {
   checkIfSourceLinksAreOld,
   filterSourcesForClient,
+  hasSourceLinksChanged,
   updateRecievedSourceLink,
   updateSettingsInSourceLinks
 } from "./utils/handleSourceLinks";
@@ -19,7 +20,7 @@ let oldSettings: ISource[] = [];
 let sourceLinks: ISource[] = [];
 const updateSourceListTimer = setInterval(() => {
   const settings = getSettings();
-  if (JSON.stringify(settings) !== JSON.stringify(oldSettings)) {    
+  if (hasSourceLinksChanged(settings, oldSettings)) {    
     oldSettings = settings;
     sourceLinks = updateSettingsInSourceLinks(sourceLinks, settings);
   }
@@ -32,7 +33,7 @@ io.on("connection", (socket: any) => {
   let clientsOldSourceLinks: ISource[] = [];
 
   const sendSourcesToClient = () => {
-    if (JSON.stringify(clientsOldSourceLinks) !== JSON.stringify(sourceLinks)) {
+    if (hasSourceLinksChanged(clientsOldSourceLinks, sourceLinks)) {
       const clientSideSources = filterSourcesForClient(
         sourceLinks,
         clientUserGroups
