@@ -12,9 +12,7 @@ export const getSettings = (): ISource[] => {
     let data: ISource[] = JSON.parse(fs.readFileSync(SETTINGS_FILE, "utf8"));
     data = data.map((source) => {
       if (!source.id) {
-        source.id =
-          Math.random().toString(36).substring(2, 15) +
-          Math.random().toString(36).substring(2, 15);
+        console.error("Error reading settings file, no id found");        
       }
       if (!source.userGroup) {
         source.userGroup = "";
