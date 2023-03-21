@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import { ISource } from "../../sharedcode/interfaces";
+import { ISourceClients } from "../../sharedcode/interfaces";
 import * as IO from "../../sharedcode/IO_CONSTANTS";
 import "../style/app.css";
 
@@ -25,12 +25,12 @@ socketClient.on("connect", () => {
 });
 
 const App = () => {
-  const [sources, setSources] = useState<ISource[]>([]);
+  const [sources, setSources] = useState<ISourceClients[]>([]);
   const [isSelected, setIsSelected] = useState<number>(-1);
   const [isLoRes, setIsLoRes] = useState<boolean>(false);
 
   useEffect(() => {
-    socketClient.on(IO.SOURCE_LIST, (receivedSources: ISource[]) => {
+    socketClient.on(IO.SOURCE_LIST, (receivedSources: ISourceClients[]) => {
       setSources([...receivedSources]);
     });
   });
@@ -59,12 +59,12 @@ const App = () => {
         >
           OFF
         </button>
-        {sources.map((source: ISource, index: number) => {
+        {sources.map((source: ISourceClients, index: number) => {
           return (
             <button
               key={source.id}
               style={
-                source.link.viewer ? { color: "white" } : { color: "#111111" }
+                source.viewer ? { color: "white" } : { color: "#111111" }
               }
               className={index !== isSelected ? "button" : "button-selected"}
               onClick={() => {
@@ -82,8 +82,8 @@ const App = () => {
           className="video"
           src={
             isLoRes
-              ? sources[isSelected].link.lores
-              : sources[isSelected].link.viewer
+              ? sources[isSelected].lores
+              : sources[isSelected].viewer
           }
           title={sources[isSelected].label}
           allow="autoplay"

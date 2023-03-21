@@ -1,4 +1,4 @@
-import { ISource, IRESTresponse } from "../../sharedcode/interfaces";
+import { ISource, IRESTresponse, ISourceClients } from "../../sharedcode/interfaces";
 
 export const updateSettingsInSourceLinks = (
   sourceLinks: ISource[],
@@ -33,21 +33,20 @@ export const updateRecievedSourceLink = (
 export const filterSourcesForClient = (
   sources: ISource[],
   userGroups: string[]
-): ISource[] => {
-  let sourcelist = sources.map((source: ISource) => {
-    source.link = {
-      viewer: source.link.viewer,
-      guest: "",
-      broadcast: "",
-      director: "",
-      lores: source.link.lores,
-    };
-    return source;
-  });
-  sourcelist = sourcelist.filter((source: ISource) => {
+): ISourceClients[] => {
+  const filteredSources = sources.filter((source: ISource) => {
     return !source.userGroup || userGroups?.includes(source.userGroup);
   });
-  return sourcelist;
+  let sourceClientList: ISourceClients[] = filteredSources.map((source: ISource) => {
+    return {
+      id: source.id,
+      label: source.label,
+      viewer: source.link.viewer,
+      lores: source.link.lores,
+    }
+  });
+
+  return sourceClientList;
 };
 
 export const checkIfSourceLinksAreOld = (sources: ISource[]): ISource[] => {

@@ -17,3 +17,11 @@ export interface ISource {
 export interface IUserGroup {
   name: string;
 }
+
+export interface ISourceClients {
+  id: string;
+  label: string;
+  viewer: string;
+  lores: string;
+}
+
