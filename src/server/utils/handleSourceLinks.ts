@@ -8,17 +8,26 @@ export const updateSettingsInSourceLinks = (
   sourceLinks: ISource[],
   settings: ISource[]
 ): ISource[] => {
-  const updatedSources = settings.map((settingsElement) => {
-    const updatedSource = sourceLinks.find(
+  const updateSources = settings.map((settingsElement) => {
+    const updateSource = sourceLinks.find(
       (source) => source.id === settingsElement.id
     );
-    if (updatedSource) {
-      settingsElement.link = updatedSource.link;
-      settingsElement.linkUpdateTime = updatedSource.linkUpdateTime;
-    }
+    if (updateSource && !updateSource.staticUrl) {
+      settingsElement.link = updateSource.link;
+      settingsElement.linkUpdateTime = updateSource.linkUpdateTime;
+    } else if (updateSource && updateSource.staticUrl) {
+      settingsElement.link = {
+        viewer: updateSource.staticUrl,
+        guest: updateSource.staticUrl,
+        broadcast: updateSource.staticUrl,
+        director: updateSource.staticUrl,
+        lores: updateSource.staticUrl,
+      };
+      settingsElement.linkUpdateTime = updateSource.linkUpdateTime;
+    } 
     return settingsElement;
   });
-  return updatedSources;
+  return updateSources;
 };
 
 export const updateRecievedSourceLink = (
