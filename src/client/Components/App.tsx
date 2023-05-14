@@ -21,6 +21,8 @@ socketClient.on("connect", () => {
     })
     .catch((err) => {
       console.log("No authorization groups recevied :", err);
+      const userGroups = ['default'];
+      socketClient.emit(IO.GET_SOURCES, userGroups);
     });
 });
 

@@ -20,6 +20,8 @@ socketClient.on("connect", () => {
     })
     .catch((err) => {
       console.log("No authorization groups recevied :", err);
+      const userGroups = ["default"];
+      socketClient.emit(IO.GET_SOURCES, userGroups);
     });
 });
 
@@ -61,7 +63,14 @@ const Admin = () => {
         })}{" "}
       </div>
       {isSelected > -1 ? (
-        <div className="link-view">Viewer link: {sources[isSelected].viewer}</div>
+        <div className="link-view">
+          <div>Viewer link:</div>
+          <div>{sources[isSelected].viewer}</div>
+          <button className="link-copy-button"
+          onClick={() => {navigator.clipboard.writeText(sources[isSelected].viewer)}}>
+            COPY TO CLIPBOARD
+          </button>
+        </div>
       ) : null}
     </div>
   );
