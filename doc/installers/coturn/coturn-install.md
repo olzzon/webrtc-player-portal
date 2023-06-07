@@ -16,8 +16,10 @@ sudo apt-get install coturn
 * un-comment listening-ip and replace with server private IP
 * un-commenting `user=username1:password1` 
 
+
 ### `/lib/systemd/system/coturn.service`
-* add AmbientCapabilities=CAP_NET_BIND_SERVICE in the [Service] section
+* add: AmbientCapabilities=CAP_NET_BIND_SERVICE 
+* in the [Service] section
 
 ## Reboot.
 sudo reboot
