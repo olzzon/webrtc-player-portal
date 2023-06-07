@@ -36,7 +36,7 @@ const Admin = () => {
   });
 
   return (
-    <div className="app" style={{backgroundColor:"#682121"}}>
+    <div className="app" style={{backgroundColor:"#112811"}}>
         <div>
           <h1>Viewer Links: Select source and copy+paste  - Links are renewed each night at 4.00 am</h1>
         </div>
@@ -47,7 +47,7 @@ const Admin = () => {
             setIsSelected(-1);
           }}
         >
-          OFF
+          HIDE
         </button>
         {sources.map((source: ISourceClients, index: number) => {
           return (
