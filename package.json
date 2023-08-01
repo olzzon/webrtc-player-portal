@@ -33,11 +33,11 @@
     "webpack-dev-server": "^4.11.1"
   },
   "scripts": {
-    "build-server": "tsc -p ./src/server",
-    "build-client": "webpack --config webpack.client.config.js",
-    "build-client-dev": "webpack --config webpack.client-dev.config.js",
+    "build:server": "tsc -p ./src/server",
+    "build:client": "webpack --config webpack.client.config.js",
+    "build:client:dev": "webpack --config webpack.client-dev.config.js",
     "start": "node dist/server/index.js",
-    "start-dev": "node --inspect -r ts-node/register src/server/index.ts",
+    "start:dev": "node --inspect -r ts-node/register src/server/index.ts",
     "package": "pkg ."
   },
   "bin": {
