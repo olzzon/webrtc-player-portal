@@ -30,8 +30,8 @@ jobs:
           yarn
       - name: Build
         run: |
-          yarn build-server
-          yarn build-client          
+          yarn build:server
+          yarn build:client          
   cd:
     runs-on: ubuntu-latest
     needs: ci

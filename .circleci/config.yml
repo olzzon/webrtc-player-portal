@@ -15,11 +15,11 @@ jobs:
           no_output_timeout: 60m
       - run:
           name: yarn build server
-          command: yarn build-server
+          command: yarn build:server
           no_output_timeout: 60m
       - run:
           name: yarn build client
-          command: yarn build-client
+          command: yarn build:client
           no_output_timeout: 60m
       - save_cache:
           key: v1-node-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
