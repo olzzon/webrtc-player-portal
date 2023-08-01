@@ -94,6 +94,21 @@ body {
   object-fit: cover;
 }
 
+.video-fullscreen {
+  margin-left: 0vw;
+  width: 100vw;
+  height: 100vh;
+  top:0%;
+  left:0px;
+  right:0px;
+  bottom:0px;
+  object-fit: cover;
+  overflow:hidden;
+  overflow-x:hidden;
+  overflow-y:hidden;
+  position:absolute;
+}
+
 .link-view {
   margin-left: 2vw;
   position: fixed;

@@ -11,6 +11,12 @@ const hostUrl = new URL(window.location.href).origin;
 const USERINFO_URL = hostUrl + "/oauth2/userinfo";
 const LOGOUT_URL = hostUrl + "/logout";
 
+// extract a preselected source from the url:
+const urlParams = new URLSearchParams(window.location.search);
+const preSelectedSource = parseInt(urlParams.get("select")) || -1;
+console.log("selectedSource :", preSelectedSource);
+
+
 socketClient.on("connect", () => {
   fetch(USERINFO_URL)
     .then((res) => res.json())
@@ -34,6 +40,9 @@ const App = () => {
   useEffect(() => {
     socketClient.on(IO.SOURCE_LIST, (receivedSources: ISourceClients[]) => {
       setSources([...receivedSources]);
+      if (preSelectedSource > 0) {
+        setIsSelected(preSelectedSource - 1);
+      }
     });
   });
 
@@ -81,7 +90,7 @@ const App = () => {
       </div>
       {isSelected > -1 ? (
         <iframe
-          className="video"
+          className={(preSelectedSource > 0) ? "video-fullscreen" : "video"}
           src={
             isLoRes
               ? sources[isSelected].lores
