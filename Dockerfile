@@ -5,8 +5,8 @@ WORKDIR /opt/webrtc-player-portal
 COPY package*.json ./
 RUN yarn --check-files --frozen-lockfile
 COPY . .
-RUN yarn build-server
-RUN yarn build-client
+RUN yarn build:server
+RUN yarn build:client
 RUN yarn --check-files --frozen-lockfile --production --force
 RUN yarn cache clean
 
