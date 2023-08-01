@@ -57,8 +57,8 @@ export const filterSourcesForClient = (
       return {
         id: source.id,
         label: source.label,
-        viewer: source.link.viewer,
-        lores: source.link.lores,
+        viewer: source.link?.viewer || "",
+        lores: source.link?.lores || "",
       };
     }
   );
@@ -105,11 +105,11 @@ export const hasSourceLinksChanged = (
     } else if (
       source.label !== newSource.label ||
       source.userGroup !== newSource.userGroup ||
-      source.link.viewer !== newSource.link.viewer ||
-      source.link.guest !== newSource.link.guest ||
-      source.link.broadcast !== newSource.link.broadcast ||
-      source.link.director !== newSource.link.director ||
-      source.link.lores !== newSource.link.lores
+      source.link?.viewer !== newSource.link?.viewer ||
+      source.link?.guest !== newSource.link?.guest ||
+      source.link?.broadcast !== newSource.link?.broadcast ||
+      source.link?.director !== newSource.link?.director ||
+      source.link?.lores !== newSource.link?.lores
     ) {
       changed = true;
     }

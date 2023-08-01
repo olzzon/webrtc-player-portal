@@ -8,7 +8,7 @@ const homeDir = os.homedir();
 const SETTINGS_FILE = path.join(homeDir, "webrtcportal-settings.json");
 
 export const getSettings = (): ISource[] => {
-  let recievedSettings: ISource[];
+  let recievedSettings: ISource[] = [];
   try {
     recievedSettings = JSON.parse(fs.readFileSync(SETTINGS_FILE, "utf8"));
     if (!validateRecievedSettings(recievedSettings)) {
