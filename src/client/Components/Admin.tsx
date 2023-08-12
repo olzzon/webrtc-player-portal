@@ -31,6 +31,8 @@ const Admin = () => {
 
   useEffect(() => {
     socketClient.on(IO.SOURCE_LIST, (receivedSources: ISourceClients[]) => {
+      // Filter out sources with no ID as these are static websources and not dynamic WebRTC sources:
+      receivedSources = receivedSources.filter((source) => source.id);
       setSources([...receivedSources]);
     });
   });
