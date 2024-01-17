@@ -28,7 +28,7 @@ const updateSourceListTimer = setInterval(() => {
 }, 10000);
 
 io.on("connection", (socket: any) => {
-  console.log("User connected :", socket.id);
+  // console.log("User connected :", socket.id);
   let clientUserGroups: string[];
   let clientOldUserGroups: string[];
   let clientsOldSourceLinks: ISource[] = [];
@@ -38,7 +38,7 @@ io.on("connection", (socket: any) => {
         sourceLinks,
         clientUserGroups
       );
-      console.log("Sending sources");
+      // console.log("Sending sources");
       socket.emit(IO.SOURCE_LIST, clientSideSources);
       clientsOldSourceLinks = JSON.parse(JSON.stringify(sourceLinks));
   };
@@ -56,11 +56,11 @@ io.on("connection", (socket: any) => {
   socket
     .on(IO.GET_SOURCES, (userGroups: string[]) => {
       clientUserGroups = userGroups;
-      console.log("GET_ALL_PLAYERS");
+      // console.log("GET_ALL_PLAYERS");
       sendSourcesToClient();
     })
     .on("disconnect", () => {
-      console.log("User disconnected");
+      // console.log("User disconnected");
       clearInterval(thisClientTimer);
     });
 });
@@ -74,7 +74,7 @@ app.post("/updatelink", (req, res) => {
     req.body?.id,
     req.body?.link
   );
-  console.log("Received Request : ", req.body);
+  // console.log("Received Request : ", req.body);
   res.send("ok");
 });
 
