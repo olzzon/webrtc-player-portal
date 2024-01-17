@@ -12,7 +12,7 @@ import {
   filterSourcesForClient,
   hasSourceLinksChanged,
   updateRecievedSourceLink,
-  updateSettingsInSourceLinks
+  updateSettingsInSourceLinks,
 } from "./utils/handleSourceLinks";
 import { getSettings } from "./utils/storage";
 
@@ -20,7 +20,7 @@ let oldSettings: ISource[] = [];
 let sourceLinks: ISource[] = [];
 const updateSourceListTimer = setInterval(() => {
   const settings = getSettings();
-  if (hasSourceLinksChanged(settings, oldSettings)) {    
+  if (hasSourceLinksChanged(settings, oldSettings)) {
     oldSettings = settings;
     sourceLinks = updateSettingsInSourceLinks(sourceLinks, settings);
   }
@@ -30,10 +30,10 @@ const updateSourceListTimer = setInterval(() => {
 io.on("connection", (socket: any) => {
   console.log("User connected :", socket.id);
   let clientUserGroups: string[];
+  let clientOldUserGroups: string[];
   let clientsOldSourceLinks: ISource[] = [];
 
   const sendSourcesToClient = () => {
-    if (hasSourceLinksChanged(clientsOldSourceLinks, sourceLinks)) {
       const clientSideSources = filterSourcesForClient(
         sourceLinks,
         clientUserGroups
@@ -41,9 +41,17 @@ io.on("connection", (socket: any) => {
       console.log("Sending sources");
       socket.emit(IO.SOURCE_LIST, clientSideSources);
       clientsOldSourceLinks = JSON.parse(JSON.stringify(sourceLinks));
-    }
   };
-  const thisClientTimer = setInterval(() => sendSourcesToClient(), 1000);
+
+  const thisClientTimer = setInterval(() => {
+    if (
+      hasSourceLinksChanged(clientsOldSourceLinks, sourceLinks) ||
+      clientUserGroups !== clientOldUserGroups
+    ) {
+      clientOldUserGroups = clientUserGroups;
+      sendSourcesToClient();
+    }
+  }, 5000);
 
   socket
     .on(IO.GET_SOURCES, (userGroups: string[]) => {
