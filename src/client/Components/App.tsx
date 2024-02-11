@@ -13,9 +13,8 @@ const LOGOUT_URL = hostUrl + "/logout";
 
 // extract a preselected source from the url:
 const urlParams = new URLSearchParams(window.location.search);
-const preSelectedSource = parseInt(urlParams.get("select") || '') || -1;
+const preSelectedSource = parseInt(urlParams.get("select") || "") || -1;
 console.log("selectedSource :", preSelectedSource);
-
 
 socketClient.on("connect", () => {
   fetch(USERINFO_URL)
@@ -27,7 +26,7 @@ socketClient.on("connect", () => {
     })
     .catch((err) => {
       console.log("No authorization groups recevied :", err);
-      const userGroups = ['default'];
+      const userGroups = ["default"];
       socketClient.emit(IO.GET_SOURCES, userGroups);
     });
 });
@@ -39,6 +38,9 @@ const App = () => {
 
   useEffect(() => {
     socketClient.on(IO.SOURCE_LIST, (receivedSources: ISourceClients[]) => {
+      if (receivedSources.length === 0) {
+        return;
+      }
       setSources([...receivedSources]);
       if (preSelectedSource > 0) {
         setIsSelected(preSelectedSource - 1);
@@ -49,11 +51,11 @@ const App = () => {
   return (
     <div className="app">
       <div className="buttons">
-          <a className="logout-href" href={LOGOUT_URL}>
-          <button className= "button-logout" type="button">
+        <a className="logout-href" href={LOGOUT_URL}>
+          <button className="button-logout" type="button">
             LOG OUT
           </button>
-            </a>
+        </a>
         <button
           className={isLoRes ? "button-lo-res-on" : "button-lo-res-off"}
           onClick={() => {
@@ -74,9 +76,7 @@ const App = () => {
           return (
             <button
               key={source.id}
-              style={
-                source.viewer ? { color: "white" } : { color: "#111111" }
-              }
+              style={source.viewer ? { color: "white" } : { color: "#111111" }}
               className={index !== isSelected ? "button" : "button-selected"}
               onClick={() => {
                 console.log("Button clicked : ", source.label);
@@ -90,12 +90,8 @@ const App = () => {
       </div>
       {isSelected > -1 ? (
         <iframe
-          className={(preSelectedSource > 0) ? "video-fullscreen" : "video"}
-          src={
-            isLoRes
-              ? sources[isSelected].lores
-              : sources[isSelected].viewer
-          }
+          className={preSelectedSource > 0 ? "video-fullscreen" : "video"}
+          src={isLoRes ? sources[isSelected].lores : sources[isSelected].viewer}
           title={sources[isSelected].label}
           allow="autoplay"
           allowFullScreen={true}
