@@ -1,96 +1,104 @@
 body {
   background: #1c1c1c;
   color: #fff;
+  font-size: 1.2rem;
 }
 
 .app {
-  vertical-align: center;
-  justify-content: center;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
 }
 
 .buttons {
   display: flex;
   flex-direction: row;
-  margin: 0.5vh;
+  overflow: auto;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  margin-left: 0vw;
 }
 
 .button {
   background-color: rgb(47, 39, 39);
+  border-color: rgb(68, 59, 59);
   margin-left: 1vw;
-  width: 15vw;
-  height: 6vh;
-  font-size: 1.4rem;
+  word-wrap: break-word;
+  width: 10rem;
+  min-width: 4rem;
+  height: 4rem;
+  border-radius: 0.5rem;
+  border-style: solid;
 }
 
 .button-selected {
   background-color: rgb(92, 92, 92);
   margin-left: 1vw;
-  width: 15vw;
-  height: 6vh;
-  font-size: 1.4rem;
+  word-wrap: break-word;
+  width: 10rem;
+  min-width: 4rem;
+  height: 4rem;
+  border-radius: 0.5rem;
+  border-style: solid;
 }
 
 .button-off {
   color: white;
   background-color: rgb(47, 39, 39);
+  border-color: rgb(68, 59, 59);
   margin-left: 1vw;
-  width: 10vw;
-  height: 6vh;
-  font-size: 1.4rem;
+  width: 10rem;
+  min-width: 4rem;
+  height: 4rem;
+  border-radius: 0.5rem;
+  border-style: solid;
 }
 
 .button-lo-res-off {
   color: rgb(169, 169, 169);
   background-color: rgb(25, 22, 22);
+  border-color: rgb(68, 59, 59);
   margin-left: 1vw;
-  width: 10vw;
-  max-width: 80px;
-  height: 5vh;
-  font-size: 1.1rem;
-  border-radius: 2rem;
+  width: 10rem;
+  min-width: 4rem;
+  height: 4rem;
+  border-radius: 0.5rem;
+  border-style: solid;
 }
 
 .button-lo-res-on {
   color: rgb(255, 255, 255);
   background-color: rgb(18, 122, 15);
+  border-color: rgb(68, 59, 59);
   margin-left: 1vw;
-  width: 10vw;
-  max-width: 80px;
-  height: 5vh;
-  font-size: 1.1rem;
-  border-radius: 2rem;
+  width: 10rem;
+  min-width: 4rem;
+  height: 4rem;
+  border-radius: 0.5rem;
+  border-style: solid;
+}
+
+.logout-href {
+  color: white;
 }
 
 .button-logout {
   color: white;
-  background-color: rgb(88, 13, 13);
-  margin-top: 0px;
+  background-color: rgb(108, 0, 0);
   margin-left: 1vw;
-  width: 10vw;
-  max-width: 80px;
-  height: 5vh;
-  border-radius: 2rem;
-}
-
-.button-logout-href {
-  color: white;
-  font-size: 1.1rem;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 1.1rem;
-  width: 4vw;
-  max-width: 50px;
-  height: 5vh;
-  margin-top: 1vh;
-  margin-left: 2vw;
+  width: 4rem;
+  min-width: 4rem;
+  height: 4rem;
+  border-radius: 0.5rem;
+  border-style: solid;
 }
 
 .video {
-  margin-left: 2vw;
-  position: fixed;
-  width: 95vw;
-  height: 92vh;
+  border-color: rgb(69, 69, 69);
+  border-style: solid;
+  margin-left: 1vw;
+  width: 97vw;
+  height: 82vh;
   object-fit: cover;
 }
 
@@ -114,7 +122,6 @@ body {
   position: fixed;
   width: 95vw;
   height: 92vh;
-  font-size: x-large;
 }
 .link-copy-button {
   color: white;
@@ -124,5 +131,4 @@ body {
   width: 10vw;
   height: 7vh;
   border-radius: 1rem;
-  font: size 1.4em;
 }

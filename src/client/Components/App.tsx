@@ -13,7 +13,7 @@ const LOGOUT_URL = hostUrl + "/logout";
 
 // extract a preselected source from the url:
 const urlParams = new URLSearchParams(window.location.search);
-const preSelectedSource = parseInt(urlParams.get("select")) || -1;
+const preSelectedSource = parseInt(urlParams.get("select") || '') || -1;
 console.log("selectedSource :", preSelectedSource);
 
 
@@ -49,11 +49,11 @@ const App = () => {
   return (
     <div className="app">
       <div className="buttons">
-        <p className="button-logout">
-          <a className="button-logout-href" href={LOGOUT_URL}>
+          <a className="logout-href" href={LOGOUT_URL}>
+          <button className= "button-logout" type="button">
             LOG OUT
-          </a>
-        </p>
+          </button>
+            </a>
         <button
           className={isLoRes ? "button-lo-res-on" : "button-lo-res-off"}
           onClick={() => {
