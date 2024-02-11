@@ -118,8 +118,7 @@ body {
 }
 
 .link-view {
-  margin-left: 2vw;
-  position: fixed;
+  margin-left: 1vw;
   width: 95vw;
   height: 92vh;
 }
