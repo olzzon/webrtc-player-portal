@@ -14,68 +14,57 @@ body {
   display: flex;
   flex-direction: row;
   overflow: auto;
+  max-height: 14vh;
   margin-bottom: 2px;
   margin-top: 2px;
   margin-left: 0vw;
 }
 
-.button {
-  background-color: rgb(48, 48, 48);
-  border-color: rgb(71, 71, 71);
-  margin-left: 1vw;
-  word-wrap: break-word;
-  width: 10rem;
-  min-width: 4rem;
-  height: 4rem;
+.button, .button-selected, .button-lo-res-off, .button-lo-res-on, .button-logout, .button-off {
   border-radius: 0.5rem;
   border-style: solid;
+  border-color: rgb(71, 71, 71);
+  margin-left: 1vw;
+  width: 10rem;
+  min-width: 4rem;
+  word-wrap: break-word;
+
+}
+
+@media (orientation: landscape) {
+  .button, .button-selected, .button-lo-res-off, .button-lo-res-on, .button-logout, .button-off {
+    height: 14vh;
+    max-height: 100px;
+    }
+}
+@media (orientation: portrait) {
+  .button, .button-selected, .button-lo-res-off, .button-lo-res-on, .button-logout, .button-off {
+    height: 8vh;
+    max-height: 80px;
+    }
+}
+
+.button {
+  background-color: rgb(48, 48, 48);
 }
 
 .button-selected {
   background-color: rgb(92, 92, 92);
-  margin-left: 1vw;
-  word-wrap: break-word;
-  width: 10rem;
-  min-width: 4rem;
-  height: 4rem;
-  border-radius: 0.5rem;
-  border-style: solid;
 }
 
 .button-off {
   color: white;
   background-color: rgb(48, 48, 48);
-  border-color: rgb(71, 71, 71);
-  margin-left: 1vw;
-  width: 10rem;
-  min-width: 4rem;
-  height: 4rem;
-  border-radius: 0.5rem;
-  border-style: solid;
 }
 
 .button-lo-res-off {
   color: rgb(169, 169, 169);
   background-color: rgb(25, 22, 22);
-  border-color: rgb(71, 71, 71);
-  margin-left: 1vw;
-  width: 10rem;
-  min-width: 4rem;
-  height: 4rem;
-  border-radius: 0.5rem;
-  border-style: solid;
 }
 
 .button-lo-res-on {
   color: rgb(255, 255, 255);
   background-color: rgb(18, 122, 15);
-  border-color: rgb(71, 71, 71);
-  margin-left: 1vw;
-  width: 10rem;
-  min-width: 4rem;
-  height: 4rem;
-  border-radius: 0.5rem;
-  border-style: solid;
 }
 
 .logout-href {
@@ -84,13 +73,8 @@ body {
 
 .button-logout {
   color: white;
+  width: 5vw;
   background-color: rgb(108, 0, 0);
-  margin-left: 1vw;
-  width: 4rem;
-  min-width: 4rem;
-  height: 4rem;
-  border-radius: 0.5rem;
-  border-style: solid;
 }
 
 .video {
