@@ -20,8 +20,8 @@ body {
 }
 
 .button {
-  background-color: rgb(47, 39, 39);
-  border-color: rgb(68, 59, 59);
+  background-color: rgb(48, 48, 48);
+  border-color: rgb(71, 71, 71);
   margin-left: 1vw;
   word-wrap: break-word;
   width: 10rem;
@@ -44,8 +44,8 @@ body {
 
 .button-off {
   color: white;
-  background-color: rgb(47, 39, 39);
-  border-color: rgb(68, 59, 59);
+  background-color: rgb(48, 48, 48);
+  border-color: rgb(71, 71, 71);
   margin-left: 1vw;
   width: 10rem;
   min-width: 4rem;
@@ -57,7 +57,7 @@ body {
 .button-lo-res-off {
   color: rgb(169, 169, 169);
   background-color: rgb(25, 22, 22);
-  border-color: rgb(68, 59, 59);
+  border-color: rgb(71, 71, 71);
   margin-left: 1vw;
   width: 10rem;
   min-width: 4rem;
@@ -69,7 +69,7 @@ body {
 .button-lo-res-on {
   color: rgb(255, 255, 255);
   background-color: rgb(18, 122, 15);
-  border-color: rgb(68, 59, 59);
+  border-color: rgb(71, 71, 71);
   margin-left: 1vw;
   width: 10rem;
   min-width: 4rem;
