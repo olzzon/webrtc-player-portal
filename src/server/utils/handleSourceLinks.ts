@@ -38,8 +38,8 @@ export const updateRecievedSourceLink = (
   const updatedSources = sources.map((source) => {
     if (id && source.id === id) {
       source.link = recievedSourceLinks;
+      source.linkUpdateTime = Date.now();
     }
-    source.linkUpdateTime = Date.now();
     return source;
   });
   return updatedSources;
