@@ -1,3 +1,5 @@
+## Looking for sponsors for this project
+
 # WebRTC Player Portal
 
 This is a web portal for playing WebRTC streams from a webrtc player machine.
